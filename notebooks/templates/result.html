@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - EduPredict</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nova.css') }}?v=3">
+    <style>
+        .mesh-bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: 
+                radial-gradient(at 20% 30%, rgba(124, 58, 237, 0.15) 0px, transparent 50%), 
+                radial-gradient(at 80% 70%, rgba(168, 85, 247, 0.1) 0px, transparent 50%), 
+                radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+            z-index: -1; 
+        }
+        body { 
+            background: #0f0f1e !important; 
+            color: #e6e8ee; 
+        }
+        .card-nova {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+        .metric-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .metric-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .metric-box:hover::before {
+            opacity: 1;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7c3aed;
+            margin-bottom: 0.5rem;
+        }
+        .btn-nova {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4) !important;
+        }
+        .btn-nova-ghost {
+            background: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: #e6e8ee !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 1.5rem !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <nav class="navbar navbar-expand-lg px-4 py-3" style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold text-white">EduPredict</span>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-nova-ghost">Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-nova-ghost">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-nova">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); border-radius: 16px;">
+                            <svg width="32" height="32" fill="white" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <h1 class="display-6 fw-black mb-2">Prediction Result</h1>
+                        <p class="text-muted">Performance analysis for <span class="fw-semibold text-white">{{ prediction.student_name }}</span></p>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="metric-box">
+                                <div class="metric-value">{{ prediction.final_grade }}</div>
+                                <div class="metric-label text-muted">Predicted Final Grade</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-box">
+                                <div class="metric-value">{{ prediction.risk_level }}</div>
+                                <div class="metric-label text-muted">Risk Level</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-box">
+                                <div class="metric-value">{{ prediction.course }}</div>
+                                <div class="metric-label text-muted">Course</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="mb-3">Performance Details</h5>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-borderless" style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; overflow: hidden;">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-muted">First Internal</td>
+                                        <td class="text-end">{{ prediction.g1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Second Internal</td>
+                                        <td class="text-end">{{ prediction.g2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Assignment</td>
+                                        <td class="text-end">{{ prediction.assignment }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Attendance</td>
+                                        <td class="text-end">{{ prediction.attendance }}%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Study Hours</td>
+                                        <td class="text-end">{{ prediction.study_hours }} hrs</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('edit_prediction', id=prediction.id) }}" class="btn btn-nova w-50">
+                            ✏️ Edit Prediction
+                        </a>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-nova-ghost w-50">
+                            📊 Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduPredict</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #0f0f1e!important; color: #e6e8ee; }
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(at 20% 30%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+            z-index: -1; }
+        .card-nova { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        .btn-nova { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)!important;
+            color: #fff!important; border: none!important; border-radius: 12px!important; }
+        .stat-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <nav class="navbar navbar-expand-lg px-4 py-3" style="background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold text-white">EduPredict</span>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('predict') }}" class="btn btn-nova">New Prediction</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light">Logout</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container py-5">
+        
+        <!-- ROW 1: Welcome text only -->
+        <div class="mb-4">
+            <h1 class="display-5 fw-black mb-2">Welcome back, {{ full_name }}</h1>
+            <p class="text-muted">Here's your prediction overview</p>
+        </div>
+        
+        <!-- ROW 2: Stat cards only -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <div class="text-muted mb-2">Total Students</div>
+                    <div class="display-6 fw-bold">{{ total_students }}</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <div class="text-muted mb-2">At-Risk Students</div>
+                    <div class="display-6 fw-bold text-danger">{{ at_risk_count }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROW 3: Table only -->
+        <div class="card-nova p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0">Recent Predictions</h3>
+                <a href="{{ url_for('predict') }}" class="btn btn-nova">Add New</a>
+                <a href="{{ url_for('download_class_report')}}" class="btn btn-nova-ghost">Download Class Report</a>
+            </div>
+            
+            {% if predictions %}
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless">
+                    <thead style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <tr>
+                            <th>STUDENT NAME</th>
+                            <th>COURSE</th>
+                            <th>PREDICTION</th>
+                            <th>STATUS</th>
+                            <th>DATE</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in predictions %}
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <td class="fw-semibold">{{ p['student_name'] }}</td>
+                            <td>{{ p['course'] }}</td>
+                            <td>{{ p['predicted_score'] }}/20</td>
+                            <td>{{ p['risk_level'] }}</td>
+                            <td>{{ p['prediction_date'][:10] }}</td>
+                            <td>
+    {% if p['risk_level']!= 'Low Risk' %}
+       <a href="{{ url_for('download_letter', id=p['id']) }}" class="btn  btn-warning">Letter</a> 
+    {% endif %}
+    <a href="{{ url_for('edit_prediction', id=p['id']) }}" class="btn btn-sm btn-outline-light me-1">Edit</a>
+    <a href="{{ url_for('delete_prediction', id=p['id']) }}"
+       class="btn btn-sm btn-outline-danger"
+       onclick="return confirm('Delete {{ p['student_name'] }}?')">Delete</a>
+</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5 text-muted">
+                <p class="mt-3">No predictions yet. Create your first one!</p>
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+</body>
+</html>

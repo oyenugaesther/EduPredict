@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root { --violet: #8b5cf6; --blue: #3b82f6; --pink: #ec4899; }
+body {
+  background: #0b0d12;
+  background-image:
+    radial-gradient(600px 400px at 10% 10%, rgba(124, 58, 237, 0.25), transparent 60%),
+    radial-gradient(500px 500px at 90% 20%, rgba(34, 211, 238, 0.18), transparent 60%),
+    radial-gradient(700px 600px at 50% 100%, rgba(236, 72, 153, 0.16), transparent 60%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.navbar {
+    background: rgba(15,18,32,0.6) !important; 
+    backdrop-filter: blur(16px); 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #000;
+}
+.mesh-bg::before,
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  animation: meshMove 25s ease-in-out infinite;
+}
+.mesh-bg::before {
+  background: radial-gradient(circle, var(--violet), transparent 70%);
+  top: -200px;
+  left: -200px;
+}
+.mesh-bg::after {
+  background: radial-gradient(circle, var(--blue), transparent 70%);
+  bottom: -200px;
+  right: -200px;
+  animation-delay: -12s;
+}
+@keyframes meshMove {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(100px, -100px) rotate(120deg); }
+  66% { transform: translate(-100px, 100px) rotate(240deg); }
+}
+.hero-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+.card-nova {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  padding: 3rem;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 30px 60px -15px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.card-nova:hover {
+  transform: translateY(-8px) perspective(1000px) rotateX(2deg);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 40px 80px -15px rgba(139, 92, 246, 0.3);
+}
+.btn-nova {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+.btn-nova:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.6);
+  color: #fff;
+}
+.btn-nova-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-nova-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: scale(1.03);
+}
+.form-control-nova, .form-select-nova {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e6e8ee;
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+.form-select-nova {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239aa3b2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+}
+
+.form-select-nova option {
+  background: #0b0d12 !important;
+  color: #e6e8ee !important;
+}
+.form-select-nova:focus option:checked {
+  background: #7c3aed !important;
+}
+
+label {
+  color: #9aa3b2;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.row.g-2 {
+  --bs-gutter-y: 0.5rem;
+}
+
+.text-center.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.form-nova {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.text-muted { color: rgba(255, 255, 255, 0.5) !important; }
+.form-label { color: rgba(255, 255, 255, 0.8); font-weight: 600; }
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--violet) !important;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2) !important;
+  color: #fff !important;
+}
+.table {
+  --bs-table-bg: transparent !important;
+  --bs-table-color: #e6e8ee !important;
+}
+.table thead th {
+  border: none !important;
+  color: #9aa3b2 !important;
+}

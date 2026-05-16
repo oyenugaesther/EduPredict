@@ -1,0 +1,11 @@
+timestamp,teacher_id,teacher_name,student_name,course,g1,g2,assignment,attendance,study_hours,predicted_grade,status
+2026-05-11 23:39,Mrs Blessing,Blessing  Ajibola,Windy Paulo,Web Content Management,13.0,15.0,17.0,60.0,4.0,14.27,Average - Needs Support
+2026-05-11 23:50,Mrs Blessing,Blessing  Ajibola,Ife Oluwa,Artificial Intelligence,20.0,18.0,17.0,80.0,7.0,17.64,Excellent - Likely to Pass
+2026-05-12 10:40,test@gmail.com,Test Teacher,Emmauel John,Fundamentals of Data Science,15.0,17.0,13.0,50.0,3.0,16.87,Excellent - Likely to Pass
+2026-05-12 11:14,test@gmail.com,Test Teacher,eze,PHP,13.0,17.0,11.0,60.0,6.0,15.75,Excellent - Likely to Pass
+2026-05-12 11:17,test@gmail.com,Test Teacher,Mohammed Ali,Artificial Intelligence,20.0,20.0,18.0,70.0,4.0,20.5,Excellent - Likely to Pass
+2026-05-12 11:18,test@gmail.com,Test Teacher,jair,Web Content Management,17.0,9.0,17.0,0.0,8.0,4.79,At Risk - Intervention Needed
+2026-05-12 11:23,test@gmail.com,Test Teacher,Dhinesh,PHP,12.0,15.0,10.0,75.0,5.0,14.76,Average - Needs Support
+2026-05-12 11:28,test@gmail.com,Test Teacher,Dhinesh,PHP,20.0,20.0,20.0,80.0,8.0,18.93,Excellent - Likely to Pass
+2026-05-12 11:57,test@gmail.com,Test Teacher,Peter A,Artificial Intelligence,12.0,15.0,15.0,50.0,4.0,13.88,Average - Needs Support
+2026-05-12 11:57,test@gmail.com,Test Teacher,Peter A,Artificial Intelligence,12.0,15.0,15.0,50.0,4.0,13.88,Average - Needs Support

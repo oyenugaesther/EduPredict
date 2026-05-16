@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+       .header { text-align: center; border-bottom: 2px solid #7c3aed; padding-bottom: 10px; }
+       .content { margin: 30px 0; }
+       .risk-high { color: #dc2626; font-weight: bold; }
+       .risk-medium { color: #f59e0b; font-weight: bold; }
+       .footer { margin-top: 40px; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        td { padding: 8px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>EDUPREDICT - STUDENT PERFORMANCE REPORT</h1>
+        <p>NBC Degree College</p>
+    </div>
+
+    <div class="content">
+        <p><strong>Date:</strong> {{ p['prediction_date'][:10] }}</p>
+        <p><strong>To:</strong> Parent/Guardian of {{ p['student_name'] }}</p>
+
+        <p>This letter concerns your ward, <strong>{{ p['student_name'] }}</strong>,
+        in <strong>{{ p['course'] }}</strong>.</p>
+
+        <p>Based on current academic data:</p>
+        <table>
+            <tr><td>Test 1 Score</td><td>{{ p['g1'] }}/20</td></tr>
+            <tr><td>Test 2 Score</td><td>{{ p['g2'] }}/20</td></tr>
+            <tr><td>Assignment</td><td>{{ p['assignment'] }}/10</td></tr>
+            <tr><td>Attendance</td><td>{{ p['attendance'] }}/10</td></tr>
+            <tr><td>Study Hours/Week</td><td>{{ p['study_hours'] }}</td></tr>
+        </table>
+
+        <p><strong>Predicted Performance:</strong> {{ p['predicted_score'] }}/20</p>
+        <p><strong>Risk Level:</strong>
+            <span class="{% if p['risk_level'] == 'High Risk' %}risk-high{% else %}risk-medium{% endif %}">
+                {{ p['risk_level']|upper }}
+            </span>
+        </p>
+
+        <p><strong>Recommendation:</strong>
+        {% if p['risk_level'] == 'High Risk' %}
+            {{ p['student_name'] }} is at high risk of failing {{ p['course'] }}.
+            We strongly recommend immediate intervention: extra lessons, improved attendance,
+            and increased study time. Please schedule a meeting with the subject teacher.
+        {% else %}
+            {{ p['student_name'] }} is at medium risk in {{ p['course'] }}.
+            With focused effort and support, performance can improve. We recommend monitoring
+            study habits and attendance closely.
+        {% endif %}
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>This is an automated report from EduPredict System.</p>
+        <p><strong>Teacher:</strong> {{ teacher_name }}</p>
+    </div>
+</body>
+</html>
